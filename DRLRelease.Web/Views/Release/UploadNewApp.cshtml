@@ -1,0 +1,182 @@
+﻿@model DRLRelease.Web.Models.UploadNewAppModel
+
+@{
+    ViewBag.Title = "UploadNewApp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("UploadNewApp", "Release", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formuploadnewapp" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="hero-unit">
+            <div class="brand">
+                <h1>Upload New Application Version</h1>
+            </div>
+        </div>
+        <div class="header-image" style="min-height:500px;">
+            <span class="page-note"> @Html.DisplayFor(m => m.FileSizeNote)</span>
+            @Html.ValidationSummary(true)
+            <span class="message-success">@ViewBag.result</span>
+            <div class="page-contain">
+                <div class="formpage">
+                    <div class="page-left">
+                        <label>IPA :</label>
+                    </div>
+                    <div class="page-right">
+                        @*<input id="fileIPA" type="file" name="UploadedFile" />*@
+                        @Html.TextBoxFor(m => m.fileUpIPA, new { type = "file", name = "UploadedFile" })
+                        @Html.ValidationMessageFor(m => m.fileUpIPA)
+                    </div>
+                </div>
+                <div class="formpage">
+                    <div class="page-left">
+                        <label>PLIST :</label>
+                    </div>
+                    <div class="page-right">
+                        @*<input id="filePLIST" type="file" name="UploadedFile" />*@
+                        @Html.TextBoxFor(m => m.fileUpPLIST, new { type = "file", name = "UploadedFile" })
+                        @Html.ValidationMessageFor(m => m.fileUpPLIST)
+                    </div>
+                </div>
+                <div class="formpage">
+                    <div class="page-left">
+                    </div>
+                    <div class="page-right">
+                        <input id="btnUploadClear" class="btn" type="button" value="Clear" />
+                        <input id="btnSubmit" class="button" type="submit" value="Upload" />
+                    </div>
+                </div>
+            </div>
+            <div class="uploadnewv-footer">
+              
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    function GetFileSize(fileid) {
+        try {
+            var fileSize = 0;
+            //for IE
+            if ($.browser.msie) {
+                //before making an object of ActiveXObject,
+                //please make sure ActiveX is enabled in your IE browser
+                var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
+                var objFile = objFSO.getFile(filePath);
+                var fileSize = objFile.size; //size in kb
+                fileSize = fileSize / 1048576; //size in mb
+            }
+                //for FF, Safari, Opeara and Others
+            else {
+                fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                fileSize = fileSize / 1048576; //size in mb
+            }
+            return fileSize;
+        }
+        catch (e) {
+            alert("Error is :" + e);
+        }
+    }
+    //get file path from client system
+    function getNameFromPath(strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+    $("#btnUploadClear").click(function (e) {
+        if ($('#fileUpPLIST').next().hasClass('field-validation-error')) {
+            $('#fileUpPLIST').next().removeClass('field-validation-error').addClass('field-validation-valid');
+        }
+        if ($('#fileUpIPA').next().hasClass('field-validation-error')) {
+            $('#fileUpIPA').next().removeClass('field-validation-error').addClass('field-validation-valid');
+        }
+        $('#fileUpPLIST').val("");
+        $('#fileUpIPA').val("");
+    });
+
+    $("#btnSubmit").live("click", function () {
+        if ($('#fileUpPLIST').next().hasClass('field-validation-error')) {
+            $('#fileUpPLIST').next().removeClass('field-validation-error').addClass('field-validation-valid');
+        }
+        if ($('#fileUpIPA').next().hasClass('field-validation-error')) {
+            $('#fileUpIPA').next().removeClass('field-validation-error').addClass('field-validation-valid');
+        }
+        var result = true;
+        if ($('#fileUpIPA').val() == "") {
+            $('#fileUpIPA').next().html("Please upload .IPA file")
+            $('#fileUpIPA').next().removeClass('field-validation-valid').addClass('field-validation-error');
+            result = false;
+        }
+        else if (!checkfile('fileUpIPA', 'ipa')) {
+            result = false;
+        }
+        if ($('#fileUpPLIST').val() == "") {
+            $('#fileUpPLIST').next().html("Please upload .PLIST file")
+            $('#fileUpPLIST').next().removeClass('field-validation-valid').addClass('field-validation-error');
+            result = false;
+        }
+        else if (!checkfile('fileUpPLIST', 'plist')) {
+            result = false;
+        }
+
+        if (result) {
+            var form = $("#formuploadnewapp");
+            form.submit();
+        }
+
+        return result;
+    });
+
+    function checkfile(ctrlid, ext) {
+        if ($('#' + ctrlid).next().hasClass('field-validation-error')) {
+            $('#' + ctrlid).next().removeClass('field-validation-error').addClass('field-validation-valid');
+        }
+        var file = getNameFromPath($("#" + ctrlid).val());
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case ext:
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        if (flag == false) {
+            $("#" + ctrlid).next().text("You can upload only ." + ext + " extension file");
+            $("#" + ctrlid).next().removeClass('field-validation-valid').addClass('field-validation-error');
+            return false;
+        }
+        else {
+            return true;
+            $("#" + ctrlid).next().text("");
+            //var size = GetFileSize(ctrlid);
+            //if (size > 3) {
+            //    $("#" + ctrlid).next().text("You can upload file up to 3 MB");
+            //    $("#" + ctrlid).next().removeClass('field-validation-valid').addClass('field-validation-error');
+            //    return false;
+            //}
+            //else {
+            //    $("#" + ctrlid).next().text("");
+            //}
+        }
+    }
+
+    $(function () {
+        $("#fileUpIPA").change(function () {
+            checkfile('fileUpIPA', 'ipa');
+        });
+        $("#fileUpPLIST").change(function () {
+            checkfile('fileUpPLIST', 'plist');
+        });
+    });
+</script>

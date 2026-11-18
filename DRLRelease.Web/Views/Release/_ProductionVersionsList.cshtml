@@ -1,0 +1,76 @@
+﻿@model DRLRelease.Web.Models.ProductionVersionsModel
+
+<div class="page-body">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+        <thead>
+            <tr>
+                <th width="6%" height="42" align="center" bgcolor="#333F45">
+                    &nbsp;
+                </th>
+                @*<th width="10%" align="center" bgcolor="#333F45" class="white_text">
+                        BRANCH
+                    </th>*@
+                <th width="10%" align="center" bgcolor="#333F45" class="white_text">
+                    USERID
+                </th>
+                <th width="20%" align="left" bgcolor="#333F45" class="white_text align_left">
+                    USER NAME
+                </th>
+                <th width="15%" align="center" bgcolor="#333F45" class="white_text">
+                    CURRENT VERSION
+                </th>
+                <th width="12%" align="center" bgcolor="#333F45" class="white_text">
+                    UPDATED
+                </th>
+                <th width="10%" align="center" bgcolor="#333F45" class="white_text">
+                    IOS VERSION
+                </th>
+                <th width="17%" align="center" bgcolor="#333F45" class="white_text">
+                    IPAD LOGIN
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.VersionList)
+            {
+                <tr>
+                    <td width="6%" class="black_text">
+                        <label>
+                            <span class="custom-checkbox"><input type="checkbox" name="assign" id="chkAssing" currentversion="@item.CurrentVersionName" currentversionid="@item.CurrentVersion" value="@item.UserID" onchange="SelectedUserID(this);"></span>
+                        </label>
+                    </td>
+                    @*<td width="10%" class="black_text">
+                            <span id="MainContent_rpProductionUserList_lblBranch_0">90</span>
+                        </td>*@
+                    <td width="10%" class="black_text">
+                        <span id="MainContent_rpProductionUserList_lblRepID_0">@item.UserID</span>
+                    </td>
+                    <td width="20%" class="black_text align_left">
+                        <span id="MainContent_rpProductionUserList_lblUserName_0">@item.FirstName , @item.LastName </span>
+                    </td>
+                    <td width="15%" class="black_text">
+                        <span id="MainContent_rpProductionUserList_lblCurrentVersion_0" style="font-weight:bold;">8.9</span>
+                        <span id="MainContent_rpProductionUserList_lblCurrentVersionID_0" style="display: none;">71</span>
+                    </td>
+                    <td width="12%" class="black_text">
+                        @if (item.IsUpdated)
+                        {
+                            <span id="MainContent_rpProductionUserList_lblUpdated_0" style="font-weight:bold;">Y</span>
+                        }
+                        else
+                        {
+                            <span id="MainContent_rpProductionUserList_lblUpdated_0" style="font-weight:bold;">N</span>
+                        }
+                    </td>
+
+                    <td width="10%" class="black_text">
+                        <span id="MainContent_rpProductionUserList_lbliOSVer_0" style="font-weight:bold;">@item.IOSVersion</span>
+                    </td>
+                    <td width="17%" class="black_text">
+                        <span id="MainContent_rpProductionUserList_lblLastLoginDateTime_0" style="font-weight:normal;">@Convert.ToDateTime(item.UFileNameLastSyncDate).ToString("dd-MMM-yyyy HH:mm tt")</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

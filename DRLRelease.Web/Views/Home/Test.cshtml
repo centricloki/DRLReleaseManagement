@@ -1,0 +1,39 @@
+﻿@model DRLRelease.Web.Models.TestNotificationModel
+@{
+    ViewBag.Title = "Test";
+}
+
+
+<div class="container">
+    <div class="hero-unit">
+        <div class="brand">
+            <h1>Test Notifications</h1>
+        </div>
+    </div>
+    <div class="header-image" style="min-height: 547px;">
+        <div class="wrap bg1">
+            <section class="content-wrapper main-content clear-fix">
+                <section id="loginForm">
+                    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <fieldset>
+                            <legend>Log in Form</legend>
+                            <ol>
+                                <li>
+                                    @Html.LabelFor(m => m.DeviceId)
+                                    @Html.TextBoxFor(m => m.DeviceId, new { @class = "txtfield" })
+                                </li>
+                                <li>
+                                    @Html.LabelFor(m => m.Message)
+                                    @Html.TextBoxFor(m => m.Message, new { @class = "txtfield" })
+                                </li>
+                            </ol>
+                            <input type="submit" class="btn btn-large" value="Send" />
+                        </fieldset>
+                    }
+                </section>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model DRLRelease.Web.Models.AssignVersionModel
+
+<script src="~/Scripts/ReleaseModule/AssignVersion.js"></script>
+<div class="web_dialog_header">
+    @Html.HiddenFor(m => m.VersionType)
+    @Html.HiddenFor(m => m.CurrentVersionId)
+    @if (Model.VersionType == "Production")
+    {
+        <div class="web_dialog_title">Assign Version in Production</div>
+    }
+    else if (Model.VersionType == "Test")
+    {
+        <div class="web_dialog_title">Assign Version in Test</div>
+    }
+    else
+    {
+        <div class="web_dialog_title">Assign Version for All</div>
+    }
+    <div class="web_dialog_close align_right">
+        <a href="javascript:void(0);" id="btndialogClose">X</a>
+    </div>
+</div>
+<div class="web_dialog_body">
+    @if ((!string.IsNullOrWhiteSpace(Model.ErrorMessage) && Convert.ToString(Model.ErrorMessage) != ""))
+    {
+        <div class="formpage">
+            <span id="lblErrorMsg" class="textValidation">@Model.ErrorMessage</span>
+        </div>
+    }
+    <div class="formpage" style="display:none">
+        <div class="page-left">
+            <label>User ID :</label>
+        </div>
+        <div class="page-right">
+            <span id="txtAV_UserID">@Model.UserIDs</span>
+        </div>
+    </div>
+    <div class="formpage">
+        <div class="page-left">
+            <label>User Names :</label>
+        </div>
+        <div class="page-right">
+            <span id="txtAV_UserID">@Model.UserNames</span>
+        </div>
+    </div>
+    <div class="formpage">
+        <div class="page-left">
+            <label>Current Version :</label>
+        </div>
+        <div class="page-right">
+            <span id="txtAV_CurrentVersion">@Model.CurrentVersion</span>
+        </div>
+    </div>
+    <div class="formpage">
+        <div class="page-left">
+            <label>Assing Version :</label>
+        </div>
+        <div class="page-right">
+            @Html.DropDownListFor(m => m.AssignList, new SelectList(Model.AssignList, "Value", "Text"), new { @class = "ddl", @Id = "ddlAssignVersion" })
+        </div>
+    </div>
+</div>
+<div class="web_dialog_footer">
+    <a id="btnassingdialogcancel" class="button popup-margin-left" style="float: right;margin-right: 12px;" href="javascript:void(0);">Cancel</a>
+    @if (Model.IsDisabledButton)
+    {
+        <a class="button disabled popup-margin-left" style="float: right;margin-right: 10px;" href="javascript:void(0);">Assign</a>
+    }
+    else
+    {
+        <a id="btnAssign" class="button popup-margin-left" style="float: right;margin-right: 10px;" href="javascript:void(0);">Assign</a>
+    }
+</div>

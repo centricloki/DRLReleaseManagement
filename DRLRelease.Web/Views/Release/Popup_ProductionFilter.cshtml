@@ -1,0 +1,141 @@
+﻿@model DRLRelease.Web.Models.ProductionFilterModel
+
+<div class="web_dialog_header">
+    @Html.HiddenFor(m => m.VersionType)
+    @if (Model.VersionType == "Production")
+    {
+        <div class="web_dialog_title">Production Filter</div>
+    }
+    else
+    {
+        <div class="web_dialog_title">Test Filter</div>
+    }
+    <div class="web_dialog_close align_right">
+        <a href="javascript:void(0);" id="btndialogClose">X</a>
+    </div>
+</div>
+<div class="web_dialog_body">
+    <div class="formpage">
+        <div class="page-left">
+            <label>User ID :</label>
+        </div>
+        <div class="page-right">
+            <input id="txtPUserId" type="text" class="txt" />
+        </div>
+    </div>
+    <div class="formpage">
+        <div class="page-left">
+            <label>User Name :</label>
+        </div>
+        <div class="page-right">
+            <input id="txtPUserName" type="text" class="txt" />
+        </div>
+    </div>
+    <div class="formpage">
+        <div class="page-left">
+            <label>Current Version :</label>
+        </div>
+        <div class="page-right">
+            <input id="txtPCurrentVersion" type="text" class="txt" />
+        </div>
+    </div>
+    <div class="formpage" style="margin-bottom: -15px; margin-top: -2px;">
+        <div class="page-left">
+            <label>Updated :</label>
+        </div>
+        <div class="page-right">
+            <table class="filtertable">
+                <tr>
+                    <td>
+                        <input id="rdUpdatedAll" checked="checked" type="radio" name="Updated" />
+                        <label for="rdUpdatedAll">All</label>
+                    </td>
+                    <td>
+                        <input id="rdUpdatedYes" type="radio" name="Updated" />
+                        <label for="rdUpdatedYes">Yes</label>
+                    </td>
+                    <td>
+                        <input id="rdUpdatedNo" type="radio" name="Updated" />
+                        <label for="rdUpdatedNo">No</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="formpage">
+        <div class="page-left">
+            <label>IOS Version :</label>
+        </div>
+        <div class="page-right">
+            <input id="txtPIOSVersion" type="text" class="txt" />
+        </div>
+    </div>
+</div>
+<div class="web_dialog_footer">
+    <a id="btnProductionFilterCancel" class="button popup-margin-left" style="float: right;margin-right: 12px;" href="javascript:void(0);">Cancel</a>
+    <a id="btnProductionFilterClear" class="button popup-margin-left" style="float: right;margin-right: 6px;" href="javascript:void(0);">Clear</a>
+    <a id="btnProductionFilterOk" class="button popup-margin-left" style="float: right;margin-right: 10px;" href="javascript:void(0);">Ok</a>
+</div>
+<script type="text/javascript">
+    $("#btnProductionFilterCancel").click(function (e) {
+        CloseFilterDialog();
+    });
+    $("#btndialogClose").click(function (e) {
+        CloseFilterDialog();
+    });
+
+    function CloseFilterDialog() {
+        HideDialog("divFilters_dialog");
+    }
+
+    $("#btnProductionFilterOk").click(function (e) {
+
+        var username = $("#txtPUserName").val();
+        var currentversion = $("#txtPCurrentVersion").val();
+        var iosversion = $("#txtPIOSVersion").val();
+
+        var userid = 0;
+        if ($("#txtPUserId").val() != "" && $("#txtPUserId").val() != null && $("#txtPUserId").val() != "0") {
+            userid = parseInt($("#txtPUserId").val());
+        }
+        if (userid != 0 || (username != '' && username != null) || (currentversion != '' && currentversion != null) || (iosversion != '' && iosversion != null)) {
+            var versiontype = $("#VersionType").val();
+            var updatedfilter = $(".filtertable tr>td input:checked").attr("id").replace("rdUpdated", "");
+
+            var UserAppVersion = {
+                CurrentVersionName: currentversion,
+                UserName: username,
+                UserID: userid,
+                IOSVersion: iosversion,
+                IsUpdatedFilter: updatedfilter,
+                VersionType: versiontype,
+            }
+            $.ajax({
+                type: "POST",
+                url: _relativeBaseDirectory + "/Release/VersionListWithFilters",
+                data: JSON.stringify({ filermodel: UserAppVersion }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    switch (versiontype) {
+                        case "Production":
+                            $('#divProductionVersion').html(data);
+                            break;
+                        case "Test":
+                            $('#divTestVersion').html(data);
+                            break;
+                    }
+                    CloseFilterDialog();
+                }
+            });
+        }
+        else {
+            $("#txtPUserId").focus();
+        }
+    });
+    $("#btnProductionFilterClear").click(function (e) {
+        $("#txtPCurrentVersion").val("");
+        $("#txtPUserName").val("");
+        $("#txtPUserId").val("");
+        $("#txtPIOSVersion").val("");
+    });
+</script>

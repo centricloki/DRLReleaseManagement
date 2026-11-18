@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Upload New Application Version";
+}
+@section featured {
+    <div class="container">
+        <div class="hero-unit">
+            <div class="brand">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        </div>
+        @*<p><a href="#" class="btn-header">Gravidaim&nbsp;<img src="img/button-arrow.png" width="22" height="23"></a></p>*@
+        <div class="header-image" style="min-height:600px">
+            <form method="post" id="formuploadnewapp" enctype="multipart/form-data" action="/Release/PopupUploadNewApp" class="tableform">
+                <div class="web_dialog_body">
+                    <div class="formpage">
+                        <div class="page-left">
+                            <label>IPA :</label>
+                        </div>
+                        <div class="page-right">
+                            <input type="file" value="" name="fileUpIPA" id="fileUpIPA" data-val-required="Please Upload .IPA File" data-val="true">
+                            <span data-valmsg-replace="true" data-valmsg-for="fileUpIPA" class="field-validation-valid"></span>
+                        </div>
+                    </div>
+                    <div class="formpage">
+                        <div class="page-left">
+                            <label>PLIST :</label>
+                        </div>
+                        <div class="page-right">
+
+                            <input type="file" value="" name="fileUpPLIST" id="fileUpPLIST" data-val-required="Please Upload .PLIST File" data-val="true">
+                            <span data-valmsg-replace="true" data-valmsg-for="fileUpPLIST" class="field-validation-valid"></span>
+                        </div>
+                    </div>
+                    <div class="formpage">
+                        <div class="page-left">
+                        </div>
+                        <div class="page-right">
+                            <input type="submit" value="Upload" id="btnSubmit" class="button">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+

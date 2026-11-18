@@ -1,0 +1,6 @@
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.Common\bin\Debug\DRLRelease.Common.dll
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.Common\bin\Debug\DRLRelease.Common.pdb
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.Common\obj\Debug\DRLRelease.Common.csproj.CoreCompileInputs.cache
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.Common\obj\Debug\DRLRelease.Common.dll
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.Common\obj\Debug\DRLRelease.Common.pdb
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.Common\obj\Debug\DRLRelease.Common.csprojAssemblyReference.cache

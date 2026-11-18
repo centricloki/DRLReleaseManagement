@@ -1,0 +1,5 @@
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.DataModel\bin\Debug\DRLRelease.DataModel.dll
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.DataModel\bin\Debug\DRLRelease.DataModel.pdb
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.DataModel\obj\Debug\DRLRelease.DataModel.csproj.CoreCompileInputs.cache
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.DataModel\obj\Debug\DRLRelease.DataModel.dll
+D:\DRL Honey Application Suite\SourceCode\HoneyReleaseManagement\DRLRelease.DataModel\obj\Debug\DRLRelease.DataModel.pdb
